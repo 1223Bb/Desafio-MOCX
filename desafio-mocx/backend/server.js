@@ -27,6 +27,12 @@ connection.once("open", () => {
   console.log("Conexão com o MongoDB bem sucedida.");
 });
 
+//Importando rotas à serem utilizadas
+
+const pessoasRouter = require("./routes/pessoas");
+
+app.use("/pessoas", pessoasRouter);
+
 app.listen(port, () => {
   console.log("O backend está rodando na porta " + port + ".");
 });

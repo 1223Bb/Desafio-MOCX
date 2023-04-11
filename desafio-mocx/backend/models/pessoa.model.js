@@ -11,6 +11,7 @@ const pessoaSchema = new Schema({
   cpf: {
     type: String,
     required: true,
+    unique: true,
   },
 
   datadenascimento: {
