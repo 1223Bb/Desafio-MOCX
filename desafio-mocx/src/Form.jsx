@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Form as RouterForm } from "react-router-dom";
 import axios from "axios";
+
 function Form(props) {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -9,30 +9,7 @@ function Form(props) {
   const URL = "http://localhost:5000/pessoas";
 
   function OnSubmit(nome, cpf, ddn) {
-    let content = JSON.stringify({
-      nome: nome,
-      cpf: cpf,
-      datadenascimento: ddn,
-    });
-    console.log(content);
-    axios
-      .post(URL, {
-        nome: nome,
-        cpf: cpf,
-        datadenascimento: ddn,
-      })
-      .then((res) => console.log(res))
-      .catch((err) => alert(err.response.data));
-    // if (props.id == null) {
-    //   console.log(
-    //     "Vamos criar uma nova entrada, com nome :" + nome + " e cpf " + cpf
-    //   );
-    //   axios.post(URL, content).then((res) => console.log(res));
-    // } else {
-    //   console.log(
-    //     "Vamos atualizar uma entrada, com nome :" + nome + " e cpf " + cpf
-    //   );
-    // }
+    props.submitFunc(nome, cpf, ddn);
   }
 
   function handleSubmit() {
