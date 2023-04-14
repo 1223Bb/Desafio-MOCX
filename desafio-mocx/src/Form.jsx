@@ -1,12 +1,48 @@
 import React, { useState } from "react";
-
-function Form() {
+import { Form as RouterForm } from "react-router-dom";
+import axios from "axios";
+function Form(props) {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [dataDeNascimento, setDataDeNascimento] = useState("");
 
+  const URL = "http://localhost:5000/pessoas";
+
+  function OnSubmit(nome, cpf, ddn) {
+    let content = JSON.stringify({
+      nome: nome,
+      cpf: cpf,
+      datadenascimento: ddn,
+    });
+    console.log(content);
+    axios
+      .post(URL, {
+        nome: nome,
+        cpf: cpf,
+        datadenascimento: ddn,
+      })
+      .then((res) => console.log(res))
+      .catch((err) => alert(err.response.data));
+    // if (props.id == null) {
+    //   console.log(
+    //     "Vamos criar uma nova entrada, com nome :" + nome + " e cpf " + cpf
+    //   );
+    //   axios.post(URL, content).then((res) => console.log(res));
+    // } else {
+    //   console.log(
+    //     "Vamos atualizar uma entrada, com nome :" + nome + " e cpf " + cpf
+    //   );
+    // }
+  }
+
+  function handleSubmit() {
+    event.preventDefault();
+    console.log("Testing");
+    OnSubmit(nome, cpf, dataDeNascimento);
+  }
+
   return (
-    <form onSubmit={OnSubmit}>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="nome">Nome:</label>
       <input
         id="nome"

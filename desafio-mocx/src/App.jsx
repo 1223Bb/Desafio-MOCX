@@ -1,13 +1,14 @@
 import "./App.css";
 import List from "./List.jsx";
-import Form from "./Form";
+import Form from "./Form.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
-    <>
-      <h1>Hello World!</h1>
-      <List />
-      <Form />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<List />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -6,7 +6,7 @@ function validarCPF(cpf) {
   let segundo = 0;
   console.log(cpf);
   for (i = 0; i < 9; i++) {
-    primeiro += cpf[i] * 10 - i;
+    primeiro += cpf[i] * (10 - i);
   }
   if (primeiro % 11 <= 1) {
     primeiro = 0;
@@ -23,7 +23,7 @@ function validarCPF(cpf) {
   }
 
   for (i = 1; i < 10; i++) {
-    segundo += cpf[i] * 10 - (i - 1);
+    segundo += cpf[i] * (10 - (i - 1));
   }
   if (segundo % 11 <= 1) {
     segundo = 0;
