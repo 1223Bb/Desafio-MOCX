@@ -65,7 +65,14 @@ router.route("/").post((req, res) => {
     newPessoa
       .save()
       .then(() => res.json("Pessoa cadastrada!"))
-      .catch((err) => res.status(400).json("Error: " + err));
+      .catch((err) => {
+        // console.log(err);
+        if (err.code == 11000) {
+          res.status(400).json("Error: CPF já existe no sistema.");
+        } else {
+          res.status(400).json("Error: " + err);
+        }
+      });
   } else {
     res.status(400).json("Error: CPF inválido.");
   }

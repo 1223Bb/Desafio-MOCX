@@ -14,7 +14,6 @@ function Form(props) {
 
   function handleSubmit() {
     event.preventDefault();
-    console.log("Testing");
     OnSubmit(nome, cpf, dataDeNascimento);
   }
 
