@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ListItem(props) {
   let data = new Date(props.ddn);
@@ -10,9 +11,14 @@ function ListItem(props) {
     <li>
       <p>Nome: {props.nome}</p>
       <p>CPF: {props.cpf}</p>
-      <p>Data de nascimento: {data.toLocaleDateString()}</p>
+      <p>
+        Data de nascimento:{" "}
+        {data.toLocaleDateString("pt-BR", { timeZone: "UTC" })}
+      </p>
       <button onClick={handleDelete}>Deletar</button>
-      <button>Editar</button>
+      <Link to={"/" + props.id}>
+        <button>Editar</button>
+      </Link>
     </li>
   );
 }

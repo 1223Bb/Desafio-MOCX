@@ -23,6 +23,8 @@ function List() {
       .catch((err) => alert(err));
   }
 
+  function UpdateEntry(id) {}
+
   function CreateEntry(nome, cpf, ddn) {
     // if (props.id == null) {
     console.log(
@@ -71,7 +73,9 @@ function List() {
             nome={pessoa.nome}
             cpf={pessoa.cpf}
             ddn={pessoa.datadenascimento}
+            id={pessoa._id}
             deleteFunc={() => DeleteEntry(pessoa._id)}
+            updateRedir={() => UpdateEntry(pessoa._id)}
           />
         ))}
       </ul>
