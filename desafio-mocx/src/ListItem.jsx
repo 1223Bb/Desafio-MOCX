@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import styles from "./ListItem.module.css";
 function ListItem(props) {
   let data = new Date(props.ddn);
 
@@ -12,7 +12,7 @@ function ListItem(props) {
   console.log(props.updateFunc);
 
   return (
-    <li>
+    <li className={styles.container}>
       <p>Nome: {props.nome}</p>
       <p>CPF: {props.cpf}</p>
       <p>
@@ -20,9 +20,7 @@ function ListItem(props) {
         {data.toLocaleDateString("pt-BR", { timeZone: "UTC" })}
       </p>
       <button onClick={handleDelete}>Deletar</button>
-      <Link
-        to={{ pathname: props.id, state: { updateFunc: props.updateFunc } }}
-      >
+      <Link to={props.id}>
         <button>Editar</button>
       </Link>
     </li>

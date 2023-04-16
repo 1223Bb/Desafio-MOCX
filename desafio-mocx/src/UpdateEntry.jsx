@@ -2,13 +2,15 @@ import React from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Form from "./Form";
 import axios from "axios";
+import styles from "./UpdateEntry.module.css";
 
 function UpdateEntry(props) {
   const { id } = useParams();
   const navigate = useNavigate();
+  let pessoaSelecionada = {};
+  getPessoa();
+
   function OnSubmit(nome, cpf, ddn) {
-    // console.log("Update Entry ID: " + id);
-    // console.log("Update Entry pessoas: " + props.pessoas);
     console.log("Update Entry setPessoas: " + props.setPessoas);
     let pessoaAtualizada = {
       nome: nome,
@@ -22,9 +24,7 @@ function UpdateEntry(props) {
         datadenascimento: ddn,
       })
       .then((res) => {
-        // console.log("Status: " + (res.status == 200));
         if (res.status == 200) {
-          // console.log("Chegamos no UpdateEntry, res status 200");
           props.setPessoas((prevPessoas) => {
             return prevPessoas.map((pessoa) => {
               if (pessoa._id === id) {
@@ -34,6 +34,7 @@ function UpdateEntry(props) {
               }
             });
           });
+          alert(res.data);
           navigate("..");
         }
       })
@@ -41,32 +42,30 @@ function UpdateEntry(props) {
         console.log(err);
         alert(err.response.data);
       });
+  }
 
-    //
-    // let pessoaAtualizada = {
-    //   nome: nome,
-    //   cpf: cpf,
-    //   datadenascimento: ddn,
-    // };
-    // axios.post(URL + "/" + id, pessoaAtualizada).then(
-    //   setPessoas(
-    //     pessoas.map((pessoa) => {
-    //       if (pessoa._id === id) {
-    //         return { ...pessoa, pessoaAtualizada };
-    //       } else {
-    //         return pessoa;
-    //       }
-    //     })
-    //   )
-    // );
+  function getPessoa() {
+    props.pessoas.map((pessoa) => {
+      if (pessoa._id === id) {
+        pessoaSelecionada = pessoa;
+      }
+    });
   }
 
   return (
     <>
-      <h1>Aqui estaremos atualizando o cadastro da pessoa com id {id}</h1>
-      <Form id={id} submitFunc={OnSubmit} />
+      <div className={styles.container}>
+        {console.log(pessoaSelecionada)}
+        <Form
+          id={id}
+          submitFunc={OnSubmit}
+          nome={pessoaSelecionada.nome}
+          cpf={pessoaSelecionada.cpf}
+          ddn={pessoaSelecionada.datadenascimento}
+        />
+      </div>
       <Link to="..">
-        <button>Fechar</button>
+        <div className={styles.backdrop} />
       </Link>
     </>
   );
