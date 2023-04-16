@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ListItem from "./ListItem";
-import Form from "./Form";
+// import Form from "./Form";
 import axios from "axios";
+import { Link, Outlet } from "react-router-dom";
 
 const URL = "http://localhost:5000/pessoas";
 
-function List() {
-  const [pessoas, setPessoas] = useState([]);
+function List(props) {
+  // const [props.pessoas, props.setPessoas] = useState([]);
 
   function FetchPeople() {
     console.log("Fetching...");
     axios.get(URL).then((response) => {
-      setPessoas(response.data);
+      props.setPessoas(response.data);
     });
   }
 
@@ -19,11 +20,30 @@ function List() {
     console.log("Vamos deletar o " + id);
     axios
       .delete(URL + "/" + id)
-      .then(setPessoas(pessoas.filter((pessoa) => pessoa._id !== id)))
+      .then(
+        props.setPessoas(props.pessoas.filter((pessoa) => pessoa._id !== id))
+      )
       .catch((err) => alert(err));
   }
 
-  function UpdateEntry(id) {}
+  function UpdateEntry(id, nome, cpf, ddn) {
+    let pessoaAtualizada = {
+      nome: nome,
+      cpf: cpf,
+      datadenascimento: ddn,
+    };
+    axios.post(URL + "/" + id, pessoaAtualizada).then(
+      props.setPessoas(
+        props.pessoas.map((pessoa) => {
+          if (pessoa._id === id) {
+            return { ...pessoa, pessoaAtualizada };
+          } else {
+            return pessoa;
+          }
+        })
+      )
+    );
+  }
 
   function CreateEntry(nome, cpf, ddn) {
     // if (props.id == null) {
@@ -40,7 +60,7 @@ function List() {
       .then((res) => {
         console.log(res);
         if (res.status == 200) {
-          setPessoas([...pessoas, pessoa]);
+          props.setPessoas([...props.pessoas, pessoa]);
         }
       })
       .catch((err) => alert(err.response.data));
@@ -67,7 +87,7 @@ function List() {
     <>
       <h2>Pessoas cadastradas</h2>
       <ul>
-        {pessoas.map((pessoa) => (
+        {props.pessoas.map((pessoa) => (
           <ListItem
             key={pessoa._id}
             nome={pessoa.nome}
@@ -75,12 +95,16 @@ function List() {
             ddn={pessoa.datadenascimento}
             id={pessoa._id}
             deleteFunc={() => DeleteEntry(pessoa._id)}
-            updateRedir={() => UpdateEntry(pessoa._id)}
+            updateFunc={UpdateEntry}
           />
         ))}
       </ul>
-      <h1>Cadastrar pessoa</h1>
-      <Form submitFunc={CreateEntry} />
+      <Link to="/">
+        <button>Criar uma entrada</button>
+      </Link>
+      {/* <h1>Cadastrar pessoa</h1> */}
+      {/* <Form submitFunc={CreateEntry} /> */}
+      <Outlet />
     </>
   );
 }

@@ -89,7 +89,13 @@ router.route("/:id").post((req, res) => {
         pessoa
           .save()
           .then(() => res.json("Cadastro atualizado!"))
-          .catch((err) => res.status(400).json("Error " + err));
+          .catch((err) => {
+            if (err.code == 11000) {
+              res.status(400).json("Error: CPF já existe no sistema.");
+            } else {
+              res.status(400).json("Error: " + err);
+            }
+          });
       })
       .catch((err) => res.status(400).json("Error " + err));
   } else {

@@ -7,6 +7,10 @@ function ListItem(props) {
   function handleDelete() {
     props.deleteFunc();
   }
+
+  console.log("ListItem console log");
+  console.log(props.updateFunc);
+
   return (
     <li>
       <p>Nome: {props.nome}</p>
@@ -16,7 +20,9 @@ function ListItem(props) {
         {data.toLocaleDateString("pt-BR", { timeZone: "UTC" })}
       </p>
       <button onClick={handleDelete}>Deletar</button>
-      <Link to={"/" + props.id}>
+      <Link
+        to={{ pathname: props.id, state: { updateFunc: props.updateFunc } }}
+      >
         <button>Editar</button>
       </Link>
     </li>
