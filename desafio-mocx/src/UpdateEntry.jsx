@@ -11,16 +11,13 @@ function UpdateEntry(props) {
   getPessoa();
 
   function OnSubmit(nome, cpf, ddn) {
-    console.log("Update Entry setPessoas: " + props.setPessoas);
     let pessoaAtualizada = {
       nome: nome,
-      cpf: cpf,
       datadenascimento: ddn,
     };
     axios
       .post("http://localhost:5000/pessoas/" + id, {
         nome: nome,
-        cpf: cpf,
         datadenascimento: ddn,
       })
       .then((res) => {
@@ -55,7 +52,6 @@ function UpdateEntry(props) {
   return (
     <>
       <div className={styles.container}>
-        {console.log(pessoaSelecionada)}
         <Form
           id={id}
           submitFunc={OnSubmit}

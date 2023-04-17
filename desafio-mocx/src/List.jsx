@@ -23,24 +23,6 @@ function List(props) {
       .catch((err) => alert(err));
   }
 
-  function UpdateEntry(id, nome, ddn) {
-    let pessoaAtualizada = {
-      nome: nome,
-      datadenascimento: ddn,
-    };
-    axios.post(URL + "/" + id, pessoaAtualizada).then(
-      props.setPessoas(
-        props.pessoas.map((pessoa) => {
-          if (pessoa._id === id) {
-            return { ...pessoa, pessoaAtualizada };
-          } else {
-            return pessoa;
-          }
-        })
-      )
-    );
-  }
-
   useEffect(() => {
     FetchPeople();
   }, []);
@@ -57,7 +39,6 @@ function List(props) {
             ddn={pessoa.datadenascimento}
             id={pessoa._id}
             deleteFunc={() => DeleteEntry(pessoa._id)}
-            updateFunc={UpdateEntry}
           />
         ))}
       </ul>

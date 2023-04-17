@@ -8,9 +8,6 @@ function ListItem(props) {
     props.deleteFunc();
   }
 
-  console.log("ListItem console log");
-  console.log(props.updateFunc);
-
   return (
     <li className={styles.container}>
       <p>Nome: {props.nome}</p>
