@@ -8,26 +8,24 @@ const URL = "http://localhost:5000/pessoas";
 
 function List(props) {
   function FetchPeople() {
-    console.log("Fetching...");
     axios.get(URL).then((response) => {
       props.setPessoas(response.data);
     });
   }
 
   function DeleteEntry(id) {
-    console.log("Vamos deletar o " + id);
     axios
       .delete(URL + "/" + id)
       .then(
         props.setPessoas(props.pessoas.filter((pessoa) => pessoa._id !== id))
       )
+      .then(alert("Deletado com sucesso."))
       .catch((err) => alert(err));
   }
 
-  function UpdateEntry(id, nome, cpf, ddn) {
+  function UpdateEntry(id, nome, ddn) {
     let pessoaAtualizada = {
       nome: nome,
-      cpf: cpf,
       datadenascimento: ddn,
     };
     axios.post(URL + "/" + id, pessoaAtualizada).then(

@@ -62,6 +62,7 @@ function UpdateEntry(props) {
           nome={pessoaSelecionada.nome}
           cpf={pessoaSelecionada.cpf}
           ddn={pessoaSelecionada.datadenascimento}
+          atualizando={true}
         />
       </div>
       <Link to="..">

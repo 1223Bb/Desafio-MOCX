@@ -32,15 +32,19 @@ function Form(props) {
         value={nome}
         onChange={(event) => setNome(event.target.value)}
       />
-      <label htmlFor="cpf">CPF:</label>
-      <input
-        id="cpf"
-        type="text"
-        required
-        placeholder="Insira um CPF válido..."
-        value={cpf}
-        onChange={(event) => setCpf(event.target.value)}
-      />
+      {!props.atualizando && (
+        <>
+          <label htmlFor="cpf">CPF:</label>
+          <input
+            id="cpf"
+            type="text"
+            required
+            placeholder="Insira um CPF válido..."
+            value={cpf}
+            onChange={(event) => setCpf(event.target.value)}
+          />
+        </>
+      )}
       <label htmlFor="data">Data de Nascimento:</label>
       <input
         id="data"
