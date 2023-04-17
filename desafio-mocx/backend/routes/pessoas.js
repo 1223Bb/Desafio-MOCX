@@ -80,27 +80,42 @@ router.route("/").post((req, res) => {
 
 //Atualizar pessoa com o id enviado.
 router.route("/:id").post((req, res) => {
-  if (validarCPF(req.body.cpf)) {
-    Pessoa.findById(req.params.id)
-      .then((pessoa) => {
-        pessoa.nome = req.body.nome;
-        pessoa.cpf = req.body.cpf;
-        pessoa.datadenascimento = Date.parse(req.body.datadenascimento);
-        pessoa
-          .save()
-          .then(() => res.json("Cadastro atualizado!"))
-          .catch((err) => {
-            if (err.code == 11000) {
-              res.status(400).json("Error: CPF já existe no sistema.");
-            } else {
-              res.status(400).json("Error: " + err);
-            }
-          });
-      })
-      .catch((err) => res.status(400).json("Error " + err));
-  } else {
-    res.status(400).json("Error: CPF inválido.");
-  }
+  // Este método contava com um CPF na hora de atualizar.
+  // Porém, o desafio consta que deve ser impossível alterar o cpf.
+  // if (validarCPF(req.body.cpf)) {
+  //   Pessoa.findById(req.params.id)
+  //     .then((pessoa) => {
+  //       pessoa.nome = req.body.nome;
+  //       pessoa.cpf = req.body.cpf;
+  //       pessoa.datadenascimento = Date.parse(req.body.datadenascimento);
+  //       pessoa
+  //         .save()
+  //         .then(() => res.json("Cadastro atualizado!"))
+  //         .catch((err) => {
+  //           if (err.code == 11000) {
+  //             res.status(400).json("Error: CPF já existe no sistema.");
+  //           } else {
+  //             res.status(400).json("Error: " + err);
+  //           }
+  //         });
+  //     })
+  //     .catch((err) => res.status(400).json("Error " + err));
+  // } else {
+  //   res.status(400).json("Error: CPF inválido.");
+  // }
+
+  Pessoa.findById(req.params.id)
+    .then((pessoa) => {
+      pessoa.nome = req.body.nome;
+      pessoa.datadenascimento = Date.parse(req.body.datadenascimento);
+      pessoa
+        .save()
+        .then(() => res.json("Cadastro atualizado!"))
+        .catch((err) => {
+          res.status(400).json("Error: " + err);
+        });
+    })
+    .catch((err) => res.status(400).json("Error " + err));
 });
 
 //Deletar pessoa com id.
